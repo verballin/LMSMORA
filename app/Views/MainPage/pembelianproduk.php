@@ -75,22 +75,37 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="<?= base_url() ?>" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <p class="m-0 fw-bold" style="font-size: 25px;">
-                <img src="<?= base_url('brem/img/icon bmc.png') ?>" alt="" height="50px" />
-                <span style="color: #fb873f;"></span>
-            </p>
+        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="brem/img/icon bmc.png" alt="" height="50px"><span
+                    style="color: #fb873f;"></span></p>
         </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-            style="border: none;">
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="<?= base_url() ?>" class="nav-item nav-link active">Home</a>
+            <?php
+            $session=session();
+            $isLoggedIn = $session->get('login') === true;
+            ?>
+            <div class="nav-item dropdown">
+                <?php if ($isLoggedIn) { ?>
+                    <a href="#" class="nav-item nav-link" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="<?= site_url('dashboard') ?>" class="dropdown-item">Dashboard</a>
+                        <form action="<?= site_url('/logout') ?>" method="post" style="display: inline;">
+                        <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </div>
+                <?php } else { ?>
+                    <a href="<?= site_url('login') ?>" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+                <?php } ?>
+            </div>
+
+                <a href="<?= base_url()?>" class="nav-item nav-link">Home</a>
                 <a href="<?= site_url('about') ?>" class="nav-item nav-link">About</a>
-                <a href="<?= site_url('courses') ?>" class="nav-item nav-link">Courses</a>
-                <?php if(true) {  //PHP BELUM BERFUNGSI KARNA LOGIN PHP BELUM JADI ?>
+                <a href="<?= site_url('courses') ?>" class="nav-item nav-link">Kursus</a>
+                <?php if($isLoggedIn) { ?>
                 <a href="<?= site_url('#') ?>" class="nav-item nav-link">Simulasi</a>
                 <?php } ?>
                 <div class="nav-item dropdown">
@@ -98,12 +113,18 @@
                     <div class="dropdown-menu fade-down m-0">
                         <a href="<?= site_url('team') ?>" class="dropdown-item">Our Team</a>
                         <a href="<?= site_url('testimonial') ?>" class="dropdown-item">Testimonial</a>
+
                     </div>
                 </div>
                 <a href="<?= site_url('contact') ?>" class="nav-item nav-link">Contact</a>
-                <a href="<?= site_url('login') ?>" class="nav-item nav-link"><i class="fa fa-user"></i></a>
-                <a href="#" class="nav-item nav-link">
-                    <div id="google_translate_element"></div>
+     
+                </div>
+                
+
+                <div id="google_translate_element">
+                </div>
+
+
                 </a>
             </div>
         </div>
@@ -115,12 +136,12 @@
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">Course</h1>
+                    <h1 class="display-3 text-white animated slideInDown">Kursus</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
-                            <li class="breadcrumb-item"><a class="text-white" href="<?= site_url('courses') ?>">Course</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">HTML Course for Beginners</li>
+                            <li class="breadcrumb-item"><a class="text-white" href="<?= site_url('courses') ?>">Kursus</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page"><?= esc($title) ?></li>
                         </ol>
                     </nav>
                 </div>
@@ -134,23 +155,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-9 wow fadeInUp">
-
                     <div class="container">
                         <div class="row g-5 justify-content-center">
-
                             <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.3s">
-                                <h2>HTML Course for Beginners</h2>
-                                <p>Start at the beginning by learning HTML basics — an important foundation for building and editing web pages.</p>
+                                <h2><?= esc($title) ?></h2></h2>
                                 <div class="d-flex">
-                                    <small><i class="fa fa-star text-warning"></i> 4.6</small>
-                                    <small style="margin-left: 15px;"><i class="fa fa-user-graduate"></i> 5.8L+ Learners</small>
-                                    <small style="margin-left: 15px;"><i class="fa fa-user"></i> Beginner</small>
-                                    <small style="margin-left: 15px;"><i class="fa fa-clock me-2"></i> 2.0 Hrs</small>
+                                    <small style="margin-left: 15px;"><i class="fa fa-clock me-2"></i>Waktu pembelajaran : <?= esc( $durasi) ?></small>
                                 </div>
-                                <div class="image-div text-left mt-3">
-                                    <img src="<?= base_url('brem/img/testimonial-2.jpg') ?>" alt="" style="height: 40px; width: 40px; border-radius: 50%;" />
-                                    <span style="margin-left: 10px;"><b>Instructor Name</b> - Zoe Bachman</span>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -161,166 +173,33 @@
                         <div class="tab-content mt-4">
 
                             <div class="tab-pane container active" id="Overview">
-                                <h2>About this Course</h2>
-                                <p>Fun fact: all websites use HTML — even this one. It's a fundamental part of every web developer's toolkit. HTML provides the content that gives web pages structure, by using elements and tags, you can add text, images, videos, forms, and more. Learning HTML basics is an important first step in your web development journey and an essential skill for front- and back-end developers.</p>
+                                <h2>Tentang Kursus ini</h2>
+                                <p><?= esc($about) ?></p>
 
-                                <h2 class="mt-4">Skills you'll gain</h2>
-                                <span class="badge rounded-pill text-white bg-primary px-4 py-2 m-2" style="font-size: 15px; font-weight: normal;">Structure pages with HTML</span>
-                                <span class="badge rounded-pill text-white bg-primary px-4 py-2 m-2" style="font-size: 15px; font-weight: normal;">Present data with tables</span>
-                                <span class="badge rounded-pill text-white bg-primary px-4 py-2 m-2" style="font-size: 15px; font-weight: normal;">Write cleaner HTML</span>
-                            </div>
-
-                            <div class="container" id="Curriculum">
-                                <h2 class="mt-4">Syllabus</h2>
-                                <div class="accordion accordion-flush" id="accordionFlushExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                Elements and Structure
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <ul>
-                                                    <li><i class="fa fa-video text-danger"></i> Introduction to HTML</li>
-                                                    <li><i class="fa fa-video text-danger"></i> HTML Document Standards</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                Tables
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <ul>
-                                                    <li><i class="fa fa-video text-danger"></i> HTML Tables</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                                Forms
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <ul>
-                                                    <li><i class="fa fa-video text-danger"></i> HTML Forms</li>
-                                                    <li><i class="fa fa-video text-danger"></i> Form Validation</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                                Semantic HTML
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <ul>
-                                                    <li><i class="fa fa-video text-danger"></i> Semantic HTML</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="container" id="Instructor">
-                                <h2 class="mt-4">About the Instructor</h2>
-                                <div class="image-div text-left mt-4">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-6">
-                                            <img src="<?= base_url('brem/img/testimonial-2.jpg') ?>" alt="" style="height: 150px; width: 150px; border-radius: 50%;" />
-                                        </div>
-                                        <div class="col-lg-9 col-md-6 mt-2">
-                                            <h5>Zoe Bachman</h5>
-                                            <p>Developer</p>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <p><i class="fa fa-star"></i> 4.87 Instructor rating</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p><i class="fa fa-check"></i> 1,533 reviews</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <p><i class="fa fa-user"></i> 20 Students</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p><i class="fa fa-video"></i> 29 courses</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="des mt-4 mb-5">
-                                        Curriculum Director at Codecademy and creative technologist. She has designed a range of Codecademy courses, including Learn HTML, Learn C#, Learn Alexa, and the beginner-friendly Learn How to Code.
-                                    </div>
-                                </div>
+                                <h2 class="mt-4">Skill yang kamu dapat</h2>
+                                <span class="badge rounded-pill text-white bg-primary px-4 py-2 m-2" style="font-size: 15px; font-weight: normal;">
+                                    <?= esc($benefit) ?>
+                                </span>
                             </div>
 
                         </div>
                     </div>
 
                 </div>
-
                 <div class="col-lg-3 col-md-6 shadow wow fadeInUp" data-wow-delay="0.3s">
                     <div class="image text-center">
-                        <img class="img-fluid mt-2" src="<?= base_url('brem/img/course-1.jpg') ?>" alt="" height="200px" width="500px" />
+                        <?php foreach ($produk as $prd) : ?>
+                        <img class="img-fluid mt-2" src="<?= base_url('brem/img/' . $prd['slug'] . '.png') ?>" alt="" height="200px" width="500px" />
+                        <?php endforeach ?>
                     </div>
-
-                    <h4 class="mt-2 p-2">Free <small></small></h4>
-
-                    <h4 class="mt-2 p-2">$
-                        <small><del>20</del></small>
+                    <h4 class="mt-2 p-2">
+                        <small><?= esc($harga) ?></small>
                     </h4>
 
                     <div class="buttons">
 
-                        <a href="#" class="text-decoration-none text-white btn p-3 w-100 mb-2">ENROLL NOW</a>
+                        <a href="<?= site_url('pembayaran/proses/' . $prd['id_produk']) ?>" class="text-decoration-none text-white btn p-3 w-100 mb-2">Daftar Sekarang</a>
 
-                    </div>
-                    <div class="list mt-2">
-                        <div class="list1 d-flex justify-content-between pt-2 border-bottom">
-                            <p><i class="fa fa-clock"></i> Duration</p>
-                            <p>2.0 Hrs</p>
-                        </div>
-                        <div class="list2 d-flex justify-content-between pt-2 border-bottom">
-                            <p><i class="fa fa-book"></i> Lectures</p>
-                            <p>4</p>
-                        </div>
-                        <div class="list3 d-flex justify-content-between pt-2 border-bottom">
-                            <p><i class="fa fa-bolt"></i> Enrolled</p>
-                            <p>240 students</p>
-                        </div>
-                        <div class="list4 d-flex justify-content-between pt-2 border-bottom">
-                            <p><i class="fa fa-google-translate"></i> Language</p>
-                            <p>English</p>
-                        </div>
-                        <div class="list5 d-flex justify-content-between pt-2 border-bottom">
-                            <p><i class="fa fa-list"></i> Skill Level</p>
-                            <p>Beginner</p>
-                        </div>
-                        <div class="list6 d-flex justify-content-between pt-2 border-bottom">
-                            <p><i class="fa fa-list"></i> Deadline</p>
-                            <p>Life Time</p>
-                        </div>
-                        <div class="list7 d-flex justify-content-between pt-2 border-bottom">
-                            <p><i class="fa fa-certificate"></i> Certificate</p>
-                            <p>Yes</p>
-                        </div>
-                        <div class="button pt-4 text-center mb-4">
-                            <i class="fa fa-share"></i><a href="#"> Share this Course</a>
-                        </div>
                     </div>
                 </div>
             </div>

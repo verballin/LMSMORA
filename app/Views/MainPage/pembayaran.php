@@ -1,37 +1,66 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Login</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta charset="utf-8" />
+    <meta name="google-translate-customization" content="9f841e7780177523-3214ceb76f765f38-gc38c6fe6f9d06436-c" />
+    <title>BMC : Pembelian</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
 
     <!-- Favicon -->
-    <link href="<?= base_url('brem/img/icon bmc.png') ?>" rel="icon">
+    <link href="<?= base_url('brem/img/icon bmc.png') ?>" rel="icon" />
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
 
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 
     <!-- Libraries Stylesheet -->
-    <link href="<?= base_url('brem/lib/animate/animate.min.css') ?>" rel="stylesheet">
-    <link href="<?= base_url('brem/lib/owlcarousel/assets/owl.carousel.min.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/lib/animate/animate.min.css') ?>" rel="stylesheet" />
+    <link href="<?= base_url('brem/lib/owlcarousel/assets/owl.carousel.min.css') ?>" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="<?= base_url('brem/css/bootstrap.min.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/css/bootstrap.min.css') ?>" rel="stylesheet" />
 
     <!-- Template Stylesheet -->
-    <link href="<?= base_url('brem/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/css/style.css') ?>" rel="stylesheet" />
 
+    <style>
+        .tabs ul li {
+            list-style-type: none;
+        }
+
+        .tabs ul li a {
+            font-size: 25px;
+            color: #4e4e4e !important;
+            font-weight: 500;
+        }
+
+        .tabs ul li a.active {
+            color: #f69050 !important;
+        }
+
+        .tabs ul li a:hover {
+            color: #f69050 !important;
+        }
+
+        #more {
+            display: none;
+        }
+
+        button {
+            border: none;
+            color: #f69050;
+        }
+    </style>
 </head>
 
 <body>
@@ -101,75 +130,87 @@
         </div>
     </nav>
     <!-- Navbar End -->
-     
-    <!-- Header Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">Konfirmasi Pembayaran</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="<?= site_url('courses') ?>">Kursus</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page"><?= esc($produk['title']) ?></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+    <!-- Konfirmasi Pembayaran Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">Login</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Login</li>
-                        </ol>
-                    </nav>
+                <div class="col-lg-8 shadow p-5 rounded wow fadeInUp" data-wow-delay="0.1s">
+                    <h2 class="mb-4 text-center">Konfirmasi Pembayaran</h2>
+                    <form action="<?= site_url('pembayaran/simpanpembayaran') ?>" method="post">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="user_id" value="<?= esc($user['user_id']) ?>">
+                        <input type="hidden" name="id_produk" value="<?= esc($produk['id_produk']) ?>">
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Nama:</strong></label>
+                            <p><?= esc($user['full_name']) ?></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Email:</strong></label>
+                            <p><?= esc($user['email']) ?></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Produk:</strong></label>
+                            <p><?= esc($produk['title']) ?></p>
+                        </div>
+
+                        <?php
+                            // Ambil angka dari string seperti "IDR 500000"
+                            $hargaBersih = preg_replace('/[^\d]/', '', $produk['harga']);
+                            $hargaAngka = (int) $hargaBersih;
+                        ?>
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Harga:</strong></label>
+                            <p>Rp<?= number_format($hargaAngka, 0, ',', '.') ?></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Tanggal:</strong></label>
+                            <p><?= date('d-m-Y H:i:s') ?></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="metode_pembayaran" class="form-label"><strong>Metode Pembayaran:</strong></label>
+                            <select name="metode_pembayaran" class="form-select" required>
+                                <option value="">-- Pilih Metode --</option>
+                                <option value="bank">Transfer Bank</option>
+                                <option value="dana">Dana</option>
+                            </select>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary px-5 py-2">Konfirmasi & Bayar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Header End -->
+    <!-- Konfirmasi Pembayaran End -->
 
-    <!-- Login Start -->
-    <div class="container-xxl py-2 mt-4">
-        <div class="container">
-            <div class="row g-4 wow fadeInUp" data-wow-delay="0.5s">
-                <center>
-                    <form class="shadow p-4" style="max-width: 550px;" method="post" action="<?= site_url('ceklogin') ?>">
-                        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                            <h1 class="mb-5 bg-white text-center px-3">Login</h1>
-
-                        </div>
-                        <?php if (session()->getFlashdata('success')): ?>
-                            <div class="alert alert-success alert-dismissible">
-                                <?= session()->getFlashdata('success') ?>
-                            </div>
-                        <?php elseif (session()->getFlashdata('error')): ?>
-                            <div class="alert alert-danger alert-dismissible">
-                                <?= session()->getFlashdata('error') ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if ((session()->getFlashdata('pesan')!== NULL)){ echo session()->getFlashdata('pesan'); }?>
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="username" class="form-control" id="username" placeholder="Username" name="username" required>
-                                    <label for="username">Username</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <p><a href="#">Forgot password?</a></p>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn text-light w-100 py-3" type="submit">Login</button>
-                            </div>
-                            <div class="col-12 text-center">
-                                <p>Don't have an account? <a class="text-decoration-none" href="<?= site_url('signup') ?>">Signup</a></p>
-                            </div>
-                        </div>
-                    </form>
-                </center>     
-            </div>
-        </div>
-    </div>
-    <!-- Login End -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -195,11 +236,16 @@
                         <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="container">
-            <div class="copyright text-center text-md-start">
-                &copy; <a class="border-bottom" href="<?= base_url() ?>">BMC</a>, 2025.
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="<?= base_url() ?>">BMC</a>, 2025.
+                    </div>
+                </div>
             </div>
         </div>
     </div>

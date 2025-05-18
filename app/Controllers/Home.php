@@ -1,6 +1,7 @@
 <?php
-// Kamis, 13 Mar 2025
+
 namespace App\Controllers;
+use App\Models\ProdukModel;
 use App\Models\UserModel; //menyertakan usermodel.php pada controller
 use CodeIgniter\I18n\Time;
 
@@ -41,6 +42,7 @@ class Home extends BaseController
         if ($user && $this->verifyPassword($password, $user['password'])) {
 
             // Login successful
+            $session->set('user_id', $user['user_id']);
             $session->set('username', $user['username']);
             $session->set('full_name', $user['full_name']);
             $session->set('login', true);
@@ -88,4 +90,71 @@ class Home extends BaseController
             return redirect()->back()->withInput();
         }
     }
+
+    public function infocourses()
+    {
+        $produkModel = new ProdukModel();
+        $data = [
+            'title' => 'Kategori Kursus Mora College',
+            'produk' => $produkModel->findAll()
+        ];
+        return view('/MainPage/courses', $data); // assuming view is at app/Views/courses.php
+    }
+
+
+
+    public function inputPembelianProduk()
+    {
+        $session = session();
+        if($session->get('username') != '' && $session->get('login')==true){
+        return view('MainPage/inputpembelianproduk'); // Load the input form view
+        }else{
+            return redirect()->to(base_url());
+        }
+    }
+    // New method to handle the form submission
+    public function simpanPembelianProduk()
+    {
+        $session = session();
+        $produkModel = new ProdukModel();
+
+        if (!$this->validate([
+            'title' => 'required',
+            'benefit' => 'required',
+            'about' => 'required',
+            'harga' => 'required',
+            'durasi' => 'required',
+            'slug' => 'required'
+        ])) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $insert = [
+            'title' => $this->request->getVar('title'),
+            'benefit' => $this->request->getVar('benefit'),
+            'about' => $this->request->getVar('about'),
+            'harga' => $this->request->getVar('harga'),
+            'durasi' => $this->request->getVar('durasi'),
+            'slug' => $this->request->getVar('slug')
+        ];
+
+        if ($produkModel->insert($insert)) {
+            $session->setFlashdata('pesan', 
+                                    '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> Data Produk Berhasil Disimpan</h5></div>');
+        } else {
+            $session->setFlashdata('pesan', 
+                                    '<div class="alert alert-danger alert-dismissible">
+                                    <h5><i class="icon fas fa-times"></i> Gagal Menyimpan Data</h5></div>');
+            return redirect()->back()->withInput();
+        }
+
+        if ($session->get('username') != '' && $session->get('login') === true) {
+            return redirect()->to(site_url('courses'));
+        } else {
+            return redirect()->to(base_url());
+        }
+    }
+
+
 }

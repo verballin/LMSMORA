@@ -8,13 +8,29 @@ use CodeIgniter\Router\RouteCollection;
 
 // $routes->get('/template', 'Home::index');
 
+$routes->get('courses', 'Courses::index');
+$routes->get('courses/detail/(:segment)', 'Courses::detail/$1');
+
+$routes->post('pembayaran/simpanpembayaran', 'Pembayaran::simpanpembayaran');
+$routes->get('pembayaran/proses/(:segment)', 'Pembayaran::proses/$1');
+$routes->get('pembayaran/instruksi/(:num)', 'Pembayaran::instruksi/$1');
+
+
 //web MainPage
 $routes->get('/', 'Home::index');
 $routes->get('/pages', 'Pages::view/index');              // default page (home)
-$routes->get('(:segment)', 'Pages::view/$1');       // catch-all for pages like /about, /contact, etc.
+
 
 $routes->post('/ceklogin', 'Home::ceklogin');
 $routes->post('/logout', 'Home::logout');
 
 
 $routes->post('/inputUser', 'Home::inputUser');
+
+
+$routes->get('/inputPembelianProduk', 'Home::inputPembelianProduk');
+$routes->post('simpanPembelianProduk', 'Home::simpanPembelianProduk');
+
+
+$routes->get('(:any)', 'Pages::view/$1');       // catch-all for pages like /about, /contact, etc.
+

@@ -1,11 +1,14 @@
 <?php namespace App\Controllers;
 
+use App\Models\ProdukModel;
+
 class Pages extends BaseController
 {
+
     public function view($page = 'index')
     {
         // Optional: whitelist or validate the $page parameter to prevent load attacks
-        $allowedPages = ['index', 'about', 'contact', 'courses', 'instructor', 'login', 'pembelianproduk', 'signup', 'team', 'testimonial']; // etc.
+        $allowedPages = ['index', 'about', 'contact', 'courses', 'instructor', 'login', 'pembelianproduk', 'inputpembelianproduk', 'pembayaran', 'signup', 'team', 'testimonial', 'dashboard']; // etc.
 
         if (! in_array($page, $allowedPages)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
@@ -13,4 +16,5 @@ class Pages extends BaseController
 
         return view('MainPage/' . $page);
     }
+    
 }

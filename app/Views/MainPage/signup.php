@@ -46,22 +46,37 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="<?= base_url() ?>" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <p class="m-0 fw-bold" style="font-size: 25px;">
-                <img src="<?= base_url('brem/img/icon bmc.png') ?>" alt="" height="50px">
-                <span style="color: #fb873f;"></span>
-            </p>
+        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="brem/img/icon bmc.png" alt="" height="50px"><span
+                    style="color: #fb873f;"></span></p>
         </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-            style="border: none;">
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="<?= base_url() ?>" class="nav-item nav-link active">Home</a>
+            <?php
+            $session=session();
+            $isLoggedIn = $session->get('login') === true;
+            ?>
+            <div class="nav-item dropdown">
+                <?php if ($isLoggedIn) { ?>
+                    <a href="#" class="nav-item nav-link" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="<?= site_url('dashboard') ?>" class="dropdown-item">Dashboard</a>
+                        <form action="<?= site_url('/logout') ?>" method="post" style="display: inline;">
+                        <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </div>
+                <?php } else { ?>
+                    <a href="<?= site_url('login') ?>" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+                <?php } ?>
+            </div>
+
+                <a href="<?= base_url()?>" class="nav-item nav-link">Home</a>
                 <a href="<?= site_url('about') ?>" class="nav-item nav-link">About</a>
-                <a href="<?= site_url('courses') ?>" class="nav-item nav-link">Courses</a>
-                <?php if(true) {  //PHP BELUM BERFUNGSI KARNA LOGIN PHP BELUM JADI ?>
+                <a href="<?= site_url('courses') ?>" class="nav-item nav-link">Kursus</a>
+                <?php if($isLoggedIn) { ?>
                 <a href="<?= site_url('#') ?>" class="nav-item nav-link">Simulasi</a>
                 <?php } ?>
                 <div class="nav-item dropdown">
@@ -69,12 +84,18 @@
                     <div class="dropdown-menu fade-down m-0">
                         <a href="<?= site_url('team') ?>" class="dropdown-item">Our Team</a>
                         <a href="<?= site_url('testimonial') ?>" class="dropdown-item">Testimonial</a>
+
                     </div>
                 </div>
                 <a href="<?= site_url('contact') ?>" class="nav-item nav-link">Contact</a>
-                <a href="<?= site_url('login') ?>" class="nav-item nav-link"><i class="fa fa-user"></i></a>
-                <a href="#" class="nav-item nav-link">
-                    <div id="google_translate_element"></div>
+     
+                </div>
+                
+
+                <div id="google_translate_element">
+                </div>
+
+
                 </a>
             </div>
         </div>

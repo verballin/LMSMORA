@@ -67,6 +67,7 @@
                 <?php if ($isLoggedIn) { ?>
                     <a href="#" class="nav-item nav-link" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
                     <div class="dropdown-menu fade-down m-0">
+                        <a href="<?= site_url('#') ?>" class="dropdown-item">Histori Pembelian</a>
                         <a href="<?= site_url('dashboard') ?>" class="dropdown-item">Dashboard</a>
                         <form action="<?= site_url('/logout') ?>" method="post" style="display: inline;">
                         <button type="submit" class="dropdown-item">Logout</button>
@@ -79,7 +80,7 @@
 
                 <a href="<?= base_url()?>" class="nav-item nav-link">Home</a>
                 <a href="<?= site_url('about') ?>" class="nav-item nav-link">About</a>
-                <a href="<?= site_url('courses') ?>" class="nav-item nav-link">Courses</a>
+                <a href="<?= site_url('courses') ?>" class="nav-item nav-link">Kursus</a>
                 <?php if($isLoggedIn) { ?>
                 <a href="<?= site_url('#') ?>" class="nav-item nav-link">Simulasi</a>
                 <?php } ?>
@@ -225,7 +226,7 @@
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                     <h6 class="section-title bg-white text-start pe-3">About Us</h6>
-                    <h1 class="mb-4" style="color: #fb873f;">Welcome to Secret Coder</h1>
+                    <h1 class="mb-4" style="color: #fb873f;">Welcome to Mora College</h1>
                     <p class="mb-4">At Secret Coder, we believe in accessible, innovative learning experiences that
                         adapt to your schedule and learning style. Join us in embracing the future of education and
                         unlock your potential with our immersive online courses.</p>

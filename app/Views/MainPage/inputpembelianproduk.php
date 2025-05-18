@@ -1,37 +1,66 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Login</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta charset="utf-8" />
+    <meta name="google-translate-customization" content="9f841e7780177523-3214ceb76f765f38-gc38c6fe6f9d06436-c" />
+    <title>BMC : Pembelian</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
 
     <!-- Favicon -->
-    <link href="<?= base_url('brem/img/icon bmc.png') ?>" rel="icon">
+    <link href="<?= base_url('brem/img/icon bmc.png') ?>" rel="icon" />
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
 
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 
     <!-- Libraries Stylesheet -->
-    <link href="<?= base_url('brem/lib/animate/animate.min.css') ?>" rel="stylesheet">
-    <link href="<?= base_url('brem/lib/owlcarousel/assets/owl.carousel.min.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/lib/animate/animate.min.css') ?>" rel="stylesheet" />
+    <link href="<?= base_url('brem/lib/owlcarousel/assets/owl.carousel.min.css') ?>" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="<?= base_url('brem/css/bootstrap.min.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/css/bootstrap.min.css') ?>" rel="stylesheet" />
 
     <!-- Template Stylesheet -->
-    <link href="<?= base_url('brem/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/css/style.css') ?>" rel="stylesheet" />
 
+    <style>
+        .tabs ul li {
+            list-style-type: none;
+        }
+
+        .tabs ul li a {
+            font-size: 25px;
+            color: #4e4e4e !important;
+            font-weight: 500;
+        }
+
+        .tabs ul li a.active {
+            color: #f69050 !important;
+        }
+
+        .tabs ul li a:hover {
+            color: #f69050 !important;
+        }
+
+        #more {
+            display: none;
+        }
+
+        button {
+            border: none;
+            color: #f69050;
+        }
+    </style>
 </head>
 
 <body>
@@ -101,17 +130,17 @@
         </div>
     </nav>
     <!-- Navbar End -->
-     
+
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">Login</h1>
+                    <h1 class="display-3 text-white animated slideInDown">Input Kursus</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Login</li>
+                            <li class="breadcrumb-item"><a class="text-white" href="<?= site_url('courses') ?>">Input Kursus</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -120,56 +149,52 @@
     </div>
     <!-- Header End -->
 
-    <!-- Login Start -->
-    <div class="container-xxl py-2 mt-4">
-        <div class="container">
-            <div class="row g-4 wow fadeInUp" data-wow-delay="0.5s">
-                <center>
-                    <form class="shadow p-4" style="max-width: 550px;" method="post" action="<?= site_url('ceklogin') ?>">
-                        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                            <h1 class="mb-5 bg-white text-center px-3">Login</h1>
+        <div class="container mt-5">
+            <?php if (session()->getFlashdata('errors')): ?>
+                <div class="alert alert-danger">
+                    <ul>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <li><?= esc($error) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
 
-                        </div>
-                        <?php if (session()->getFlashdata('success')): ?>
-                            <div class="alert alert-success alert-dismissible">
-                                <?= session()->getFlashdata('success') ?>
-                            </div>
-                        <?php elseif (session()->getFlashdata('error')): ?>
-                            <div class="alert alert-danger alert-dismissible">
-                                <?= session()->getFlashdata('error') ?>
-                            </div>
-                        <?php endif; ?>
+                    <?php if (session()->getFlashdata('pesan')): ?> <?= session()->getFlashdata('pesan') ?><?php endif; ?>
+            <h2>Input Data Produk</h2>
+            <form method="post" action="<?= site_url('simpanPembelianProduk') ?>">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="benefit" class="form-label">Benefit</label>
+                    <input type="text" class="form-control" id="benefit" name="benefit" required>
+                </div>
 
-                        <?php if ((session()->getFlashdata('pesan')!== NULL)){ echo session()->getFlashdata('pesan'); }?>
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="username" class="form-control" id="username" placeholder="Username" name="username" required>
-                                    <label for="username">Username</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <p><a href="#">Forgot password?</a></p>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn text-light w-100 py-3" type="submit">Login</button>
-                            </div>
-                            <div class="col-12 text-center">
-                                <p>Don't have an account? <a class="text-decoration-none" href="<?= site_url('signup') ?>">Signup</a></p>
-                            </div>
-                        </div>
-                    </form>
-                </center>     
-            </div>
+                <div class="mb-3">
+                    <label for="harga" class="form-label">Harga</label>
+                    <input type="text" class="form-control" id="harga" name="harga" required>
+                </div>
+                <div class="mb-3">
+                    <label for="durasi" class="form-label">Durasi Kursus</label>
+                    <input type="text" class="form-control" id="durasi" name="durasi" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="about" class="form-label">About</label>
+                    <textarea class="form-control" id="about" name="about" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="slug" class="form-label">Slug</label>
+                    <input type="text" class="form-control" id="slug" name="slug" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-    </div>
-    <!-- Login End -->
+
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -195,11 +220,16 @@
                         <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="container">
-            <div class="copyright text-center text-md-start">
-                &copy; <a class="border-bottom" href="<?= base_url() ?>">BMC</a>, 2025.
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="<?= base_url() ?>">BMC</a>, 2025.
+                    </div>
+                </div>
             </div>
         </div>
     </div>

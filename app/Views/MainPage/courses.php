@@ -46,20 +46,37 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="<?= base_url() ?>" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="<?= base_url('brem/img/icon bmc.png') ?>" alt="" height="50px"><span
+        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="brem/img/icon bmc.png" alt="" height="50px"><span
                     style="color: #fb873f;"></span></p>
         </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-            style="border: none;">
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="<?= base_url() ?>" class="nav-item nav-link active">Home</a>
+            <?php
+            $session=session();
+            $isLoggedIn = $session->get('login') === true;
+            ?>
+            <div class="nav-item dropdown">
+                <?php if ($isLoggedIn) { ?>
+                    <a href="#" class="nav-item nav-link" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="<?= site_url('dashboard') ?>" class="dropdown-item">Dashboard</a>
+                        <form action="<?= site_url('/logout') ?>" method="post" style="display: inline;">
+                        <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </div>
+                <?php } else { ?>
+                    <a href="<?= site_url('login') ?>" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+                <?php } ?>
+            </div>
+
+                <a href="<?= base_url()?>" class="nav-item nav-link">Home</a>
                 <a href="<?= site_url('about') ?>" class="nav-item nav-link">About</a>
-                <a href="<?= site_url('courses') ?>" class="nav-item nav-link">Courses</a>
-                <?php if(true) {  //PHP BELUM BERFUNGSI KARNA LOGIN PHP BELUM JADI ?>
+                <a href="<?= site_url('courses') ?>" class="nav-item nav-link">Kursus</a>
+                <?php if($isLoggedIn) { ?>
                 <a href="<?= site_url('#') ?>" class="nav-item nav-link">Simulasi</a>
                 <?php } ?>
                 <div class="nav-item dropdown">
@@ -67,12 +84,18 @@
                     <div class="dropdown-menu fade-down m-0">
                         <a href="<?= site_url('team') ?>" class="dropdown-item">Our Team</a>
                         <a href="<?= site_url('testimonial') ?>" class="dropdown-item">Testimonial</a>
+
                     </div>
                 </div>
                 <a href="<?= site_url('contact') ?>" class="nav-item nav-link">Contact</a>
-                <a href="<?= site_url('login') ?>" class="nav-item nav-link"><i class="fa fa-user"></i></a>
-                <a href="#" class="nav-item nav-link">
-                    <div id="google_translate_element"></div>
+     
+                </div>
+                
+
+                <div id="google_translate_element">
+                </div>
+
+
                 </a>
             </div>
         </div>
@@ -84,11 +107,11 @@
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">Courses</h1>
+                    <h1 class="display-3 text-white animated slideInDown">Kursus</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Courses</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Kursus</li>
                         </ol>
                     </nav>
                 </div>
@@ -101,115 +124,31 @@
     <div class="container-xxl py-5 category">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center px-3">Categories</h6>
-                <h1 class="mb-5" style="color: #fb873f;">Popular Topics to Explore</h1>
+                <h6 class="section-title bg-white text-center px-3">Kategori</h6>
+                <h1 class="mb-5" style="color: #fb873f;">Kategori Kursus Mora College</h1>
             </div>
+
             <div class="row g-2 m-2">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="content shadow p-3 mb-2 wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="<?= base_url('brem/img/cat1.png') ?>" class="img-fluid" alt="categories">
-                        <h5 class="my-2">
-                            <a href="#" class="text-center">Microsoft Excel</a>
-                        </h5>
+                <?php foreach ($produk as $prd) : ?>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <a href="<?= site_url('courses/detail/' . $prd['slug']) ?>"
+                        class="content shadow p-3 mb-2 wow fadeInUp d-block text-decoration-none"
+                        data-wow-delay="0.3s"
+                        style="cursor: pointer;">
+
+                            <img src="<?= base_url('brem/img/' . $prd['slug'] . '.png') ?>"
+                                alt="<?= esc($prd['title']) ?>"
+                                class="img-fluid mb-2"
+                                style="height: 150px; object-fit: cover; width: 100%;">
+
+                            <h5 class="my-2"><?= esc($prd['title']) ?></h5>
+                        </a>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="content shadow p-3 mb-2 wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="<?= base_url('brem/img/cat2.png') ?>" class="img-fluid" alt="categories">
-                        <h5 class="my-2">
-                            <a href="#" class="text-center">AWS</a>
-                        </h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="content shadow p-3 mb-2 wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="<?= base_url('brem/img/cat3.png') ?>" class="img-fluid" alt="categories">
-                        <h5 class="my-2">
-                            <a href="#" class="text-center">Python</a>
-                        </h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="content shadow p-3 mb-2 wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="<?= base_url('brem/img/cat4.png') ?>" class="img-fluid" alt="categories">
-                        <h5 class="my-2">
-                            <a href="#" class="text-center">Java</a>
-                        </h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="content shadow p-3 mb-2 wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="<?= base_url('brem/img/cat5.png') ?>" class="img-fluid" alt="categories">
-                        <h5 class="my-2">
-                            <a href="#" class="text-center">Web Design</a>
-                        </h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="content shadow p-3 mb-2 wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="<?= base_url('brem/img/cat6.png') ?>" class="img-fluid" alt="categories">
-                        <h5 class="my-2">
-                            <a href="#" class="text-center">Web Development</a>
-                        </h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="content shadow p-3 mb-2 wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="<?= base_url('brem/img/cat7.png') ?>" class="img-fluid" alt="categories">
-                        <h5 class="my-2">
-                            <a href="#" class="text-center">MySQL</a>
-                        </h5>
-                    </div>
+                <?php endforeach; ?>
         </div>
     </div>
     <!-- Categories End -->
 
-    <!-- Courses Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center px-3">Popular Courses</h6>
-                <h1 class="mb-5" style="color: #fb873f;">Explore new and trending free online courses</h1>
-            </div>
-            <div class="row g-4 py-2">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item shadow">
-                        <div class="position-relative overflow-hidden text-light image">
-                            <img class="img-fluid" src="<?= base_url('brem/img/course-1.jpg') ?>" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#fb873f;"
-                                class="px-2 py-1 fw-bold text-uppercase">FREE</div>
-                        </div>
-                        <div class="p-2 pb-0">
-                            <h5 class="mb-1"><a href="#" class="text-dark">HTML Course for Beginners</a></h5>
-                        </div>
-                        <div class="d-flex">
-                            <small class="flex-fill text-center py-1 px-2">
-                                <i class="fa fa-star text-warning me-2"></i>4.55
-                            </small>
-                            <small class="flex-fill text-center py-1 px-2">
-                                <i class="fa fa-user-graduate me-2"></i>5.8L+ Learners
-                            </small>
-                            <small class="flex-fill text-center py-1 px-2">
-                                <i class="fa fa-user me-2"></i>Beginner
-                            </small>
-                        </div>
-                        <div class="d-flex">
-                            <small class="flex-fill text-left p-2 px-2">
-                                <i class="fa fa-clock me-2"></i>2.0 Hrs
-                            </small>
-                            <small class="py-1 px-2 fw-bold fs-6 text-center">₹ 0</small>
-                            <small class="text-primary py-1 px-2 fw-bold fs-6" style="float:right;">
-                                <a href="#">Enroll Now</a>
-                                <i class="fa fa-chevron-right me-2 fs-10"></i>
-                            </small>
-                        </div>
-                    </div>
-                </div>
-                <!-- Repeat similar structure for other courses... -->
-            </div>
-        </div>
-    </div>
-    <!-- Courses End -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -262,5 +201,12 @@
 
     <!-- Template Javascript -->
     <script src="<?= base_url('brem/js/main.js') ?>"></script>
+        <script>
+    window.setTimeout(function(){
+        $('.alert').fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+        });
+    },1500);
+    </script>
 </body>
 </html>

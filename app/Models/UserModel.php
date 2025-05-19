@@ -14,7 +14,7 @@ class UserModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes     = false;
     protected $protectFields     = true;
-    protected $allowedFields     = ['username', 'email', 'password', 'full_name', 'role', 'profile_pic_url', 'date_birth', 'gender',
+    protected $allowedFields     = ['username', 'email', 'password', 'full_name', 'role', 'boleh_ujian', 'date_birth', 'gender',
         'phone', 'address', 'created_at', 'updated_at', 'reset_password_token', 'reset_password_token_expiry'];
         
 }

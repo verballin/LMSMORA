@@ -135,81 +135,63 @@
     </nav>
     <!-- Navbar End -->
 
-    <!-- Header Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">Kursus</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
-                            <li class="breadcrumb-item"><a class="text-white" href="<?= site_url('courses') ?>">Kursus</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page"><?= esc($title) ?></li>
-                        </ol>
-                    </nav>
-                </div>
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">Konfirmasi Akses Ujian</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="<?= site_url('kelolauser') ?>">Kelola User</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Kelola User</li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
-    <!-- Header End -->
+</div>
+<!-- Header End -->
 
-    <!-- Course Detail Start -->
-    <div class="container-xxl py-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-9 wow fadeInUp">
-                    <div class="container">
-                        <div class="row g-5 justify-content-center">
-                            <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.3s">
-                                <h2><?= esc($title) ?></h2></h2>
-                                <div class="d-flex">
-                                    <small style="margin-left: 15px;"><i class="fa fa-clock me-2"></i>Waktu pembelajaran : <?= esc( $durasi) ?></small>
-                                </div>
+    <div class="container mt-5">
+    <h3 class="mb-4">Kelola Akses Ujian Siswa</h3>
 
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="container-fluid wow fadeInUp mt-5 tabs">
-
-                        <!-- Tab panes -->
-                        <div class="tab-content mt-4">
-
-                            <div class="tab-pane container active" id="Overview">
-                                <h2>Tentang Kursus ini</h2>
-                                <p><?= esc($about) ?></p>
-
-                                <h2 class="mt-4">Skill yang kamu dapat</h2>
-                                <span class="badge rounded-pill text-white bg-primary px-4 py-2 m-2" style="font-size: 15px; font-weight: normal;">
-                                    <?= esc($benefit) ?>
-                                </span>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-3 col-md-6 shadow wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="image text-center">
-                        <?php foreach ($produk as $prd) : ?>
-                        <img class="img-fluid mt-2" src="<?= base_url('brem/img/' . $prd['slug'] . '.png') ?>" alt="" height="200px" width="500px" />
+        <?php if (!empty($siswa)) : ?>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nama Lengkap</th>
+                            <th>Email</th>
+                            <th>Akses Ujian</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($siswa as $item) : ?>
+                            <tr>
+                                <td><?= esc($item['full_name']) ?></td>
+                                <td><?= esc($item['email']) ?></td>
+                                <td>
+                                    <form action="<?= site_url('kelolauser/updateAkses/' . $item['user_id']) ?>" method="post">
+                                        <select name="boleh_ujian" class="form-select form-select-sm" onchange="this.form.submit()">
+                                            <option value="1" <?= $item['boleh_ujian'] == 1 ? 'selected' : '' ?>>Boleh Ujian</option>
+                                            <option value="0" <?= $item['boleh_ujian'] == 0 ? 'selected' : '' ?>>Tidak Boleh</option>
+                                        </select>
+                                    </form>
+                                </td>
+                            </tr>
                         <?php endforeach ?>
-                    </div>
-                    <h4 class="mt-2 p-2">
-                        <small><?= esc($harga) ?></small>
-                    </h4>
-
-                    <div class="buttons">
-
-                        <a href="<?= site_url('pembayaran/proses/' . $prd['id_produk']) ?>" class="text-decoration-none text-white btn p-3 w-100 mb-2">Daftar Sekarang</a>
-
-                    </div>
-                </div>
+                    </tbody>
+                </table>
             </div>
-        </div>
+        <?php else : ?>
+            <div class="alert alert-info">Belum ada siswa yang terdaftar.</div>
+        <?php endif ?>
     </div>
-    <!-- Course Detail End -->
+
+
+
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">

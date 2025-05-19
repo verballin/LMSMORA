@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\ProdukModel;
+use App\Models\PembayaranModel;
 use App\Models\UserModel; //menyertakan usermodel.php pada controller
 use CodeIgniter\I18n\Time;
 
@@ -43,6 +44,7 @@ class Home extends BaseController
 
             // Login successful
             $session->set('user_id', $user['user_id']);
+            $session->set('role', $user['role']);
             $session->set('username', $user['username']);
             $session->set('full_name', $user['full_name']);
             $session->set('login', true);
@@ -103,11 +105,11 @@ class Home extends BaseController
 
 
 
-    public function inputPembelianProduk()
+    public function inputProduk()
     {
         $session = session();
         if($session->get('username') != '' && $session->get('login')==true){
-        return view('MainPage/inputpembelianproduk'); // Load the input form view
+        return view('MainPage/inputproduk'); // Load the input form view
         }else{
             return redirect()->to(base_url());
         }
@@ -154,6 +156,39 @@ class Home extends BaseController
         } else {
             return redirect()->to(base_url());
         }
+    }
+
+    public function historipembelian()
+    {
+        $session = session();
+        $user_id = $session->get('user_id'); // ambil ID user dari session login
+        $role = $session->get('role');
+
+        if (!$user_id) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $pembayaranModel = new PembayaranModel();
+
+        // Jika admin, ambil semua data pembelian
+        if ($role === 'Admin') {
+            $data['pembayaran'] = $pembayaranModel
+                ->select('pembayaran.*, produk.title as produk_nama, user.full_name as user_nama')
+                ->join('produk', 'produk.id_produk = pembayaran.id_produk')
+                ->join('user', 'user.user_id = pembayaran.user_id') // join untuk ambil nama user
+                ->orderBy('pembayaran.created_at', 'DESC')
+                ->findAll();
+
+        }else {
+        // Query join pembayaran + produk
+            $data['pembayaran'] = $pembayaranModel
+                ->select('pembayaran.*, produk.title as produk_nama')
+                ->join('produk', 'produk.id_produk = pembayaran.id_produk')
+                ->where('pembayaran.user_id', $user_id)
+                ->orderBy('pembayaran.created_at', 'DESC')
+                ->findAll();
+        }
+        return view('MainPage/historipembelian', $data);
     }
 
 

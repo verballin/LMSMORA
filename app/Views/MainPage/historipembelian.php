@@ -2,36 +2,65 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>BMC : Instructor</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta charset="utf-8" />
+    <meta name="google-translate-customization" content="9f841e7780177523-3214ceb76f765f38-gc38c6fe6f9d06436-c" />
+    <title>BMC : Pembelian</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
 
     <!-- Favicon -->
-    <link href="<?= base_url('brem/img/icon bmc.png') ?>" rel="icon">
+    <link href="<?= base_url('brem/img/icon bmc.png') ?>" rel="icon" />
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
 
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 
     <!-- Libraries Stylesheet -->
-    <link href="<?= base_url('brem/lib/animate/animate.min.css') ?>" rel="stylesheet">
-    <link href="<?= base_url('brem/lib/owlcarousel/assets/owl.carousel.min.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/lib/animate/animate.min.css') ?>" rel="stylesheet" />
+    <link href="<?= base_url('brem/lib/owlcarousel/assets/owl.carousel.min.css') ?>" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="<?= base_url('brem/css/bootstrap.min.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/css/bootstrap.min.css') ?>" rel="stylesheet" />
 
     <!-- Template Stylesheet -->
-    <link href="<?= base_url('brem/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('brem/css/style.css') ?>" rel="stylesheet" />
 
+    <style>
+        .tabs ul li {
+            list-style-type: none;
+        }
+
+        .tabs ul li a {
+            font-size: 25px;
+            color: #4e4e4e !important;
+            font-weight: 500;
+        }
+
+        .tabs ul li a.active {
+            color: #f69050 !important;
+        }
+
+        .tabs ul li a:hover {
+            color: #f69050 !important;
+        }
+
+        #more {
+            display: none;
+        }
+
+        button {
+            border: none;
+            color: #f69050;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,7 +72,6 @@
         </div>
     </div>
     <!-- Spinner End -->
-
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
@@ -64,6 +92,10 @@
                 <?php if ($isLoggedIn) { ?>
                     <a href="#" class="nav-item nav-link" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
                     <div class="dropdown-menu fade-down m-0">
+                        <?php if (session()->get('role') === 'Admin') : ?>
+                        <a href="<?= site_url('kelolauser') ?>" class="dropdown-item">Kelola User</a>    
+                        <?php endif; ?>
+                        <a href="<?= site_url('historipembelian') ?>" class="dropdown-item">Histori Pembelian</a>
                         <a href="<?= site_url('dashboard') ?>" class="dropdown-item">Dashboard</a>
                         <form action="<?= site_url('/logout') ?>" method="post" style="display: inline;">
                         <button type="submit" class="dropdown-item">Logout</button>
@@ -103,41 +135,77 @@
     </nav>
     <!-- Navbar End -->
 
-
-    <!-- Header Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">Become An Instructor</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Become An Instructor</li>
-                        </ol>
-                    </nav>
-                </div>
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">Konfirmasi Pembayaran</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="<?= base_url() ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="<?= site_url('historipembelian') ?>">Histori Pembelian</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Pembelian</li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
-    <!-- Header End -->
+</div>
+<!-- Header End -->
 
-    <!-- Instructor Page Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h1 class="mb-5 bg-white text-center px-3" style="color: #fb873f;">Apply As Instructor</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <h5>Welcome to SecretCoder - Where Knowledge Meets Innovation</h5>
-                    <p class="mb-4">Are you passionate about sharing your expertise and making a real impact on learners worldwide? If so, we invite you to become an instructor on our dynamic e-learning platform! Join a community of educators dedicated to fostering a love for learning and empowering individuals to achieve their goals.</p>
-                </div>
-            </div>
+    <div class="container mt-5">
+    <h3 class="mb-4">Data Pembayaran Anda</h3>
+
+    <?php if (!empty($pembayaran)) : ?>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Nama Lengkap</th>
+                        <th>Produk</th>
+                        <th>Harga</th>
+                        <th>Status</th>
+                        <th>Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($pembayaran as $item) : ?>
+                        <tr>
+                            <td><?= esc($item['full_name']) ?></td>
+                            <td><?= esc($item['produk_nama']) ?></td>
+
+                            <?php
+                            // Ambil angka dari string seperti "IDR 500000"
+                            $hargaBersih = preg_replace('/[^\d]/', '', $item['harga']);
+                            $hargaAngka = (int) $hargaBersih;
+                            ?>
+                            <td>Rp. <?= number_format($hargaAngka, 0, ',', '.') ?></td>
+
+                            <td>
+                                <?php if (session()->get('role') === 'Admin') : ?>
+                                    <form action="<?= site_url('pembayaran/updateStatus/' . $item['id_pembayaran']) ?>" method="post" style="display:inline;">
+                                        <select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
+                                            <option value="pending" <?= $item['status'] === 'pending' ? 'selected' : '' ?>>pending</option>
+                                            <option value="paid" <?= $item['status'] === 'paid' ? 'selected' : '' ?>>paid</option>
+                                        </select>
+                                    </form>
+                                <?php else : ?>
+                                    <?= esc($item['status']) ?>
+                                <?php endif ?>
+                            </td>
+                            <td><?= esc(date('d-m-Y H:i', strtotime($item['created_at']))) ?></td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
         </div>
-    </div>
+    <?php else : ?>
+        <div class="alert alert-info">Anda belum memiliki data pembayaran.</div>
+    <?php endif ?>
+</div>
 
-    <!-- More sections here as needed -->
+
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -163,6 +231,7 @@
                         <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="container">

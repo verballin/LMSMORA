@@ -62,6 +62,11 @@
                 <?php if ($isLoggedIn) { ?>
                     <a href="#" class="nav-item nav-link" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
                     <div class="dropdown-menu fade-down m-0">
+                        <?php if (session()->get('role') === 'Admin') : ?>
+                        <a href="<?= site_url('kelolauser') ?>" class="dropdown-item">Kelola User</a>   
+                        <a href="<?= site_url('inputproduk') ?>" class="dropdown-item">Input Produk</a>    
+                        <?php endif; ?>
+                        <a href="<?= site_url('historipembelian') ?>" class="dropdown-item">Histori Pembelian</a>
                         <a href="<?= site_url('dashboard') ?>" class="dropdown-item">Dashboard</a>
                         <form action="<?= site_url('/logout') ?>" method="post" style="display: inline;">
                         <button type="submit" class="dropdown-item">Logout</button>

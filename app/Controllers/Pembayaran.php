@@ -108,4 +108,20 @@ class Pembayaran extends BaseController
         ]);
     }
 
+    
+    public function updateStatus($id)
+    {
+        $session = session();
+        if ($session->get('role') !== 'Admin') {
+            return redirect()->to(site_url('historipembelian'))->with('error', 'Unauthorized');
+        }
+
+        $status = $this->request->getPost('status');
+        $pembayaranModel = new PembayaranModel();
+
+        $pembayaranModel->update($id, ['status' => $status]);
+
+        return redirect()->to(site_url('historipembelian'))->with('success', 'Status diperbarui');
+    }
+
 }

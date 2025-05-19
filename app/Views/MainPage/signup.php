@@ -157,10 +157,9 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                             <select class="form-control" id="role"name="role">
-                                            <option value="Mentor">Mentor</option>
                                             <option value="Siswa">Siswa</option>
                                             </select>
-                                        <label for="role">Silahkan pilih role anda</label>
+                                        <label for="role">Role</label>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -178,8 +177,8 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                             <select class="form-control" id="gender"name="gender">
-                                            <option value="R1">Laki-Laki</option>
-                                            <option value="R2">Perempuan</option>
+                                            <option value="Laki-Laki">Laki-Laki</option>
+                                            <option value="Perempuan">Perempuan</option>
                                             </select>
                                         <label for="role">Jenis Kelamin</label>
                                 </div>
